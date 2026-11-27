@@ -11,4 +11,9 @@
   "font_tweaks.config.hint": "Bold drawn once · sign outline merged 8 passes into 1",
   "font_tweaks.config.reset": "Reset",
   "font_tweaks.config.done": "Done"
+,
+  "font_tweaks.config.boldEntry": "Bold rendering…",
+  "font_tweaks.config.glowEntry": "Glowing text…",
+  "font_tweaks.config.boldTitle": "Bold rendering",
+  "font_tweaks.config.glowTitle": "Glowing text"
 }

@@ -86,6 +86,19 @@ public final class SignGlowOutline {
         }
     }
 
+    /**
+     * 字体图集重载后调用：清掉上一轮的失败计数与「永久停用」标记。
+     *
+     * <p>不重置的话，重载几次（资源包 / 字体包切换）累积到 {@link #MISS_LIMIT} 就会把优化
+     * 永久关掉 —— 表现为「换完资源包，荧光描边优化失效」。</p>
+     */
+    public static void reset() {
+        failed = false;
+        missed = false;
+        missCount = 0;
+        announced = false;
+    }
+
     /** 第一个描边字形真的上图集了 —— 往日志写一行（排查装配用）。 */
     static void noteApplied() {
         if (!announced) {
@@ -113,7 +126,12 @@ public final class SignGlowOutline {
             );
 
             Font.PreparedText prepared = font.prepareText(recolored, x, y, outlineColor, false, false, 0);
-            return missed ? null : prepared;
+            if (missed) {
+                return null;
+            }
+
+            missCount = 0;   // 这一轮全部成功 → 清掉失败计数
+            return prepared;
         } catch (Throwable t) {
             failed = true;
             LOGGER.warn("[Font Tweaks] 告示牌荧光描边优化已停用，退回原版 8 遍描边", t);

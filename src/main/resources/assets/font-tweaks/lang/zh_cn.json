@@ -11,4 +11,9 @@
   "font_tweaks.config.hint": "粗体只画一遍 · 荧光描边 8 遍合成 1 遍",
   "font_tweaks.config.reset": "恢复默认",
   "font_tweaks.config.done": "完成"
+,
+  "font_tweaks.config.boldEntry": "粗体渲染…",
+  "font_tweaks.config.glowEntry": "荧光文本渲染…",
+  "font_tweaks.config.boldTitle": "粗体渲染",
+  "font_tweaks.config.glowTitle": "荧光文本渲染"
 }

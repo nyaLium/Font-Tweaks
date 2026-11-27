@@ -1,6 +1,7 @@
 package com.nyalium.fonttweaks.mixin;
 
 import com.nyalium.fonttweaks.BoldDilation;
+import com.nyalium.fonttweaks.SignGlowOutline;
 import net.minecraft.client.gui.font.GlyphStitcher;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,5 +22,6 @@ public abstract class GlyphStitcherMixin {
     @Inject(method = "reset", at = @At("HEAD"))
     private void cttHudFork$dropBoldDilation(CallbackInfo ci) {
         BoldDilation.clear();
+        SignGlowOutline.reset();
     }
 }
