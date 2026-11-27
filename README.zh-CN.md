@@ -13,10 +13,6 @@ Minecraft Fabric 的纯客户端字体优化 mod。
 
 [GitHub Releases](https://github.com/nyaLium/Font-Tweaks/releases)
 
-## 依赖
-
-Minecraft 26.3、Fabric Loader ≥ 0.20.1、Fabric API、Java ≥ 25；Mod Menu 可选（只影响设置入口）。
-
 ## 配置
 
 `config/font-tweaks.json`，或 Mod Menu → Font Tweaks：
