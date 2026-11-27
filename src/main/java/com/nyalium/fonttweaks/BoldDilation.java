@@ -237,10 +237,12 @@ public final class BoldDilation {
             if (!diagDone) {
                 diagDone = true;
                 LOGGER.info("[Font Tweaks] dilate diag: format={} {}x{} comps={} coverOff={} srcLimit={} dstLimit={} margin={}",
-                        format, width, height, components, format.luminanceOrAlphaOffset(),
+                        format, width, height, components, format.luminanceOrAlphaOffset() / 8,
                         src.limit(), dst.limit(), margin);
             }
-            int coverageOffset = format.luminanceOrAlphaOffset();
+            // 注意：Format.luminanceOrAlphaOffset() 返回的是**位**偏移（RGBA 的 alpha 在 24 位），
+            // 而 getPixelBytes() 是按字节索引的缓冲区，所以必须 /8 换成字节偏移（RGBA → 3）。
+            int coverageOffset = format.luminanceOrAlphaOffset() / 8;
             int stride = width * components;
             int outStride = outWidth * components;
 
