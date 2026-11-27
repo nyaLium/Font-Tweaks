@@ -15,10 +15,6 @@ A client-side font rendering optimization mod for **Minecraft / Fabric**.
 
 [GitHub Releases](https://github.com/nyaLium/Font-Tweaks/releases)
 
-## Requirements
-
-Minecraft 26.3, Fabric Loader ≥ 0.20.1, Fabric API, Java ≥ 25. Mod Menu is optional (only needed for the settings entry).
-
 ## Configuration
 
 `config/font-tweaks.json`, or Mod Menu → Font Tweaks:
