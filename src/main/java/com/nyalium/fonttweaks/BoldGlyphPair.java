@@ -150,6 +150,9 @@ public final class BoldGlyphPair implements BakedGlyph {
             }
 
             return null;
+        } catch (BoldDilation.GlyphSkip skip) {
+            // 单个字形做不了 → 它自己退回原版，其它字形不受影响
+            return null;
         } catch (Throwable t) {
             BoldDilation.disable(what + "字形生成失败", t);
             return null;

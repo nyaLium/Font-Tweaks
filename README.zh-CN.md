@@ -26,7 +26,8 @@ Minecraft Fabric 的纯客户端字体优化 mod。
 
 ## 兼容
 
-- 覆盖 `BitmapProvider`（原版位图字体）与 `TrueTypeGlyphProvider`（资源包里的 TTF）；
+- 覆盖原版三条字形来源：`BitmapProvider`（原版位图字体）、`TrueTypeGlyphProvider`（资源包里的 TTF）、
+  `UnihexProvider`（unifont —— 字体包没有覆盖的字就靠它兜底）；
 - 其它字形提供者、取不到像素、GPU 写入失败 → 自动退回原版，不会让文字消失；
 - 与光影（Iris）、Sodium 无冲突（不替换字体渲染管线）；
 - 如果有别的 mod 接管了字体渲染（Caxton、Ember's Text API），粗体优化会自动失效，荧光描边会自动退回原版 8 遍；

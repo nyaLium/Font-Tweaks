@@ -5,6 +5,7 @@ import com.mojang.blaze3d.font.GlyphInfo;
 import com.mojang.blaze3d.font.UnbakedGlyph;
 import com.nyalium.fonttweaks.BitmapPixelSource;
 import com.nyalium.fonttweaks.BoldDilatedBitmap;
+import com.nyalium.fonttweaks.BoldDilation;
 import com.nyalium.fonttweaks.BoldGlyphFactory;
 import com.nyalium.fonttweaks.BoldGlyphPair;
 import com.nyalium.fonttweaks.BoldPixelSource;

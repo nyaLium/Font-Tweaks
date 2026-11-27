@@ -105,8 +105,8 @@ public final class BoldDilatedBitmap implements GlyphBitmap {
     public void upload(int x, int y, GpuTexture texture) {
         NativeImage source = this.pixels.render();
         if (source == null) {
-            // 让上层走降级（FontSet 会给回 missing 字形，BoldGlyphPair 会识破并退回双画）
-            throw new IllegalStateException("bold dilation pixel source unavailable");
+            // 只跳过这一个字形（上层退回原版），不关全局开关
+            throw new BoldDilation.GlyphSkip("拿不到原字形像素");
         }
 
         NativeImage dilated = null;
@@ -114,7 +114,7 @@ public final class BoldDilatedBitmap implements GlyphBitmap {
         try {
             dilated = BoldDilation.dilate(source, this.strength(), this.getOversample(), this.square);
             if (dilated == null) {
-                throw new IllegalStateException("bold dilation unsupported for this glyph");
+                throw new BoldDilation.GlyphSkip("这个字形的格式/尺寸不支持膨胀");
             }
 
             RenderSystem.getDevice().createCommandEncoder().writeToTexture(texture, dilated, 0, 0, x, y);

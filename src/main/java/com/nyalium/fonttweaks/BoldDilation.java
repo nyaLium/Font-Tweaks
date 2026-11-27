@@ -43,6 +43,18 @@ import org.slf4j.LoggerFactory;
 public final class BoldDilation {
     private static final Logger LOGGER = LoggerFactory.getLogger("font-tweaks/bold");
 
+    /**
+     * 「这个字形做不了膨胀」——只让<b>当前字形</b>退回原版，不动全局开关。
+     *
+     * <p>和真正的异常分开：偶发一两个字形取不到像素（provider 已关、格式不支持…）
+     * 不该把整个功能永久关掉。</p>
+     */
+    public static final class GlyphSkip extends RuntimeException {
+        public GlyphSkip(String message) {
+            super(message);
+        }
+    }
+
     /** 粗体模式：膨胀（省一半顶点）。 */
     public static final int MODE_DILATION = 0;
     /** 粗体模式：保留双画，只调第二遍的偏移距离。 */
