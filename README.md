@@ -48,4 +48,4 @@ gradle build --offline
 ## License
 
 MIT (see `LICENSE`).
-Inspired by the *ideas* of BoldTextFix (bold modes) and FeyTweaks (glow outline); no code was taken from them.
+Inspired by the *ideas* of BoldTextFix (bold modes) and FeyTweaks (glow outline).
