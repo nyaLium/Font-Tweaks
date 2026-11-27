@@ -228,7 +228,9 @@ public final class BoldDilation {
         try {
             ByteBuffer src = source.getPixelBytes();
             ByteBuffer dst = out.getPixelBytes();
-            int coverageOffset = format.luminanceOrAlphaOffset();
+            // Format.luminanceOrAlphaOffset() 返回的是**位**偏移（RGBA 的 alpha 在 24 位），
+            // 而 getPixelBytes() 按字节索引，必须 /8 转成字节偏移（RGBA → 3）。
+            int coverageOffset = format.luminanceOrAlphaOffset() / 8;
             int stride = width * components;
             int outStride = outWidth * components;
 
