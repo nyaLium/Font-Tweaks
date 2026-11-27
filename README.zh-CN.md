@@ -32,9 +32,8 @@ Minecraft 26.3、Fabric Loader ≥ 0.20.1、Fabric API、Java ≥ 25；Mod Menu 
 
 - 覆盖 `BitmapProvider`（原版位图字体）与 `TrueTypeGlyphProvider`（资源包里的 TTF）；
 - 其它字形提供者、取不到像素、GPU 写入失败 → 自动退回原版，不会让文字消失；
-- 与光影（Iris）、Sodium、EBE 无冲突（不替换字体渲染管线）；
+- 与光影（Iris）、Sodium 无冲突（不替换字体渲染管线）；
 - 如果有别的 mod 接管了字体渲染（Caxton、Ember's Text API），粗体优化会自动失效，荧光描边会自动退回原版 8 遍；
-  所有注入都是 `require = 0`，版本对不上时退化为原版行为而不是崩溃。
 
 ## 构建
 
