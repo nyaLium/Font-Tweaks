@@ -1,39 +1,51 @@
 # Font Tweaks
 
-Minecraft **26.3** / Fabric 的纯客户端字体优化 mod，两件事：
+**English** | [中文](README.zh-CN.md)
 
-- **粗体渲染优化**：原版粗体把同一个字形画两遍。这里用掩膜膨胀生成一张更粗的字形贴图，
-  粗体只画一遍（顶点数减半、四周对称加粗）；另提供「偏移」模式，保留原版双画只调第二遍距离。
-- **告示牌荧光描边优化**：原版发光字要把整行字画 8 遍（±1 像素的 3×3 去掉中心）。
-  这里用外扩 1 像素的膨胀字形合成 **1 遍**，观感不变、顶点数降到约 1/4.5。
+A client-side font rendering optimization mod for **Minecraft 26.3 / Fabric**.
 
-## 兼容
+- **Bold rendering optimization** — vanilla draws every bold glyph twice (second copy shifted right). This mod
+  mask-dilates the glyph bitmap into a thicker atlas entry, so bold text is drawn **once** (half the quads,
+  symmetric weight). An "offset" mode is also available: keep the vanilla double draw and only tune its distance.
+- **Glowing sign outline optimization** — vanilla draws glowing text **8 times** (±1 px, 3×3 minus center) to fake
+  an outline. This mod bakes a 1 px dilated glyph and merges those 8 passes into **1** — same look, roughly 1/4.5
+  of the quads.
 
-- 覆盖 `BitmapProvider`（原版位图字体）与 `TrueTypeGlyphProvider`（资源包 TTF，如「缝合像素」）；
-- 其它字形提供者、取不到像素、GPU 写入失败 → 自动退回原版，不会让文字消失；
-- 与光影（Iris）、Sodium、EBE 无冲突（不替换字体渲染管线）。
+## Download
 
-## 依赖
+[GitHub Releases](https://github.com/nyaLium/Font-Tweaks/releases)
 
-Fabric Loader ≥ 0.20.1、Fabric API、Java ≥ 25；Mod Menu 可选（装了才有设置入口）。
+## Requirements
 
-## 配置
+Minecraft 26.3, Fabric Loader ≥ 0.20.1, Fabric API, Java ≥ 25. Mod Menu is optional (only needed for the settings entry).
 
-`config/font-tweaks.json`，或 Mod Menu → Font Tweaks：
+## Configuration
 
-| 项 | 默认 |
+`config/font-tweaks.json`, or Mod Menu → Font Tweaks:
+
+| Option | Default |
 | --- | --- |
-| 粗体渲染优化 / 粗体模式 | 开 / 膨胀 |
-| 膨胀强度 / 偏移距离 | 0.25 / 0.35 |
-| 告示牌荧光描边优化 / 描边距离上限 | 开 / 16 格 |
+| Bold rendering optimization / bold mode | on / dilation |
+| Dilation strength / offset distance | 0.25 / 0.35 |
+| Glowing sign outline optimization / outline distance | on / 16 blocks |
+| Outline width | 1.0 px (range 0.5 – 1.0, step 0.1) |
 
-## 构建
+## Compatibility
+
+- Works with `BitmapProvider` (vanilla bitmap fonts) and `TrueTypeGlyphProvider` (TTF from resource packs).
+- Other glyph providers, unreachable pixels, failed GPU writes → automatically fall back to vanilla; text never disappears.
+- No conflict with shaders (Iris), Sodium or EBE — the vanilla text pipeline is not replaced.
+- If another mod takes over text rendering (Caxton, Ember's Text API), bold optimization becomes inert and the sign
+  outline automatically falls back to vanilla's 8 passes. All injections use `require = 0`, so a version mismatch
+  degrades to vanilla behaviour instead of crashing.
+
+## Build
 
 ```
 gradle build --offline
 ```
 
-## 许可
+## License
 
-MIT（见 `LICENSE`）。灵感参考了 BoldTextFix（粗体三模式）与 FeyTweaks（荧光描边优化）的**思路**，
-未使用它们的任何代码。
+MIT (see `LICENSE`).
+Inspired by the *ideas* of BoldTextFix (bold modes) and FeyTweaks (glow outline); no code was taken from them.
