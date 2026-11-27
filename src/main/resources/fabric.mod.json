@@ -6,6 +6,11 @@
   "description": "Optimizes the rendering of bold text and glowing sign text.",
   "authors": ["nyaLium"],
   "license": "MIT",
+  "contact": {
+    "homepage": "https://github.com/nyaLium/Font-Tweaks",
+    "sources": "https://github.com/nyaLium/Font-Tweaks",
+    "issues": "https://github.com/nyaLium/Font-Tweaks/issues"
+  },
   "icon": "assets/font-tweaks/icon.png",
   "environment": "client",
   "entrypoints": {
@@ -17,5 +22,8 @@
     "minecraft": ">=${minecraft_version}",
     "java": ">=25",
     "fabric-api": "*"
+  },
+  "suggests": {
+    "modmenu": ">=21.0.0"
   }
 }
