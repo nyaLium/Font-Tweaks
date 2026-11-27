@@ -59,6 +59,8 @@ public final class SignGlowOutline {
     private static boolean outlineRequest;
     /** 本次生成里有没有字形拿不到描边变体（有就整体退回原版）。 */
     private static boolean missed;
+    /** 这一轮是否遇到过本 mod 的字形对（没有 → 字形来源被别的 mod 接管了）。 */
+    private static boolean sawPair;
     private static int missCount;
     private static boolean announced;
     private static boolean failed;
@@ -79,6 +81,11 @@ public final class SignGlowOutline {
     /** {@link BoldGlyphPair} 用它判断「这次是在画描边」。 */
     static boolean isOutlineRequest() {
         return outlineRequest;
+    }
+
+    /** {@link BoldGlyphPair} 参与了一次描边生成（用来自检字形来源是否被接管）。 */
+    static void notePair() {
+        sawPair = true;
     }
 
     /** 某个字形没有描边变体 → 本次整体退回原版。 */
@@ -124,6 +131,7 @@ public final class SignGlowOutline {
     ) {
         outlineRequest = true;
         missed = false;
+        sawPair = false;
 
         try {
             // 按原版的做法把每个字形的颜色替换成描边色：告示牌文本的 style 里可能自带颜色
@@ -134,6 +142,12 @@ public final class SignGlowOutline {
 
             Font.PreparedText prepared = font.prepareText(recolored, x, y, outlineColor, false, false, 0);
             if (missed) {
+                return null;
+            }
+
+            // 一个本 mod 的字形都没遇到（Caxton 之类接管了字体渲染）→
+            // 不要取消原版 8 遍描边，否则描边会直接消失。
+            if (!sawPair) {
                 return null;
             }
 

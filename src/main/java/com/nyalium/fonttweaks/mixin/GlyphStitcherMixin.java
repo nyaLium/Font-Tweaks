@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GlyphStitcher.class)
 public abstract class GlyphStitcherMixin {
 
-    @Inject(method = "reset", at = @At("HEAD"))
+    @Inject(method = "reset", at = @At("HEAD"), require = 0)
     private void cttHudFork$dropBoldDilation(CallbackInfo ci) {
         BoldDilation.clear();
         SignGlowOutline.reset();

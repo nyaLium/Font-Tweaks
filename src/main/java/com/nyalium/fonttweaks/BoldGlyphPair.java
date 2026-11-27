@@ -69,6 +69,7 @@ public final class BoldGlyphPair implements BakedGlyph {
     ) {
         // ① 告示牌荧光描边：整行只画一遍膨胀字形
         if (SignGlowOutline.isOutlineRequest()) {
+            SignGlowOutline.notePair();
             BakedGlyph thick = this.outlineGlyph();
             if (thick == null) {
                 SignGlowOutline.noteMiss();
