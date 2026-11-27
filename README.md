@@ -2,7 +2,7 @@
 
 **English** | [中文](README.zh-CN.md)
 
-A client-side font rendering optimization mod for **Minecraft 26.3 / Fabric**.
+A client-side font rendering optimization mod for **Minecraft / Fabric**.
 
 - **Bold rendering optimization** — vanilla draws every bold glyph twice (second copy shifted right). This mod
   mask-dilates the glyph bitmap into a thicker atlas entry, so bold text is drawn **once** (half the quads,
