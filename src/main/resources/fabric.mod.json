@@ -6,6 +6,7 @@
   "description": "Optimizes the rendering of bold text and glowing sign text.",
   "authors": ["nyaLium"],
   "license": "MIT",
+  "icon": "assets/font-tweaks/icon.png",
   "environment": "client",
   "entrypoints": {
     "modmenu": ["com.nyalium.fonttweaks.FontTweaksModMenu"]
