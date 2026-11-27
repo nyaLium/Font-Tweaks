@@ -34,10 +34,9 @@ Minecraft 26.3, Fabric Loader ≥ 0.20.1, Fabric API, Java ≥ 25. Mod Menu is o
 
 - Works with `BitmapProvider` (vanilla bitmap fonts) and `TrueTypeGlyphProvider` (TTF from resource packs).
 - Other glyph providers, unreachable pixels, failed GPU writes → automatically fall back to vanilla; text never disappears.
-- No conflict with shaders (Iris), Sodium or EBE — the vanilla text pipeline is not replaced.
+- No conflict with shaders (Iris) or Sodium — the vanilla text pipeline is not replaced.
 - If another mod takes over text rendering (Caxton, Ember's Text API), bold optimization becomes inert and the sign
-  outline automatically falls back to vanilla's 8 passes. All injections use `require = 0`, so a version mismatch
-  degrades to vanilla behaviour instead of crashing.
+  outline automatically falls back to vanilla's 8 passes. A version mismatch degrades to vanilla behaviour instead of crashing.
 
 ## Build
 
