@@ -41,8 +41,15 @@ import org.slf4j.LoggerFactory;
 public final class SignGlowOutline {
     private static final Logger LOGGER = LoggerFactory.getLogger("font-tweaks/sign");
 
-    /** 描边固定外扩 1 像素（正好对应原版 8 遍的 ±1 像素）。 */
-    public static final double OUTLINE_STRENGTH = 1.0;
+    /** 默认描边粗细：1 像素 = 原版 8 遍描边的外扩量。 */
+    public static final double DEFAULT_WIDTH = 1.0;
+
+    /** 当前配置的描边粗细（0.5 ~ 1.0 GUI 像素）。 */
+    public static float width() {
+        Config.Cfg cfg = Config.get();
+        double v = cfg == null ? DEFAULT_WIDTH : cfg.signGlowWidth;
+        return (float) Math.max(0.5, Math.min(1.0, v));
+    }
     /** 原版自己的描边距离上限（格）。 */
     public static final int VANILLA_DISTANCE = 16;
     /** 连续这么多次「有字形没有描边变体」就整体停用。 */

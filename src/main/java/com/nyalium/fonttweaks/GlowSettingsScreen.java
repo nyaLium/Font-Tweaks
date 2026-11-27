@@ -47,6 +47,15 @@ public final class GlowSettingsScreen extends Screen {
                 v -> Config.get().signGlowDistance = (int) Math.round(v));
         distance.active = cfg.signGlowOutline;
         addRenderableWidget(distance);
+        y += ROW_GAP;
+
+        AbstractSliderButton widthSlider = new ValueSlider(x, y, width, ROW_HEIGHT, 0.5, 1.0, 0.1,
+                cfg.signGlowWidth,
+                v -> Component.translatable("font_tweaks.config.width",
+                        String.format(java.util.Locale.ROOT, "%.1f", v)),
+                v -> Config.get().signGlowWidth = v);
+        widthSlider.active = cfg.signGlowOutline;
+        addRenderableWidget(widthSlider);
 
         addRenderableWidget(Button.builder(Component.translatable("font_tweaks.config.reset"), b -> {
             Config.resetGlow();

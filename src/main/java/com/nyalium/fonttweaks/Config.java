@@ -35,6 +35,8 @@ public final class Config {
         public boolean signGlowOutline = true;
         /** 描边距离上限（4 ~ 16 格，默认 16 = 原版）。 */
         public int signGlowDistance = 16;
+        /** 描边粗细（0.5 ~ 1.0 GUI 像素，默认 1.0 = 原版）。 */
+        public double signGlowWidth = 1.0;
     }
 
     private static Cfg cfg = new Cfg();
@@ -84,6 +86,7 @@ public final class Config {
         Cfg d = new Cfg();
         cfg.signGlowOutline = d.signGlowOutline;
         cfg.signGlowDistance = d.signGlowDistance;
+        cfg.signGlowWidth = d.signGlowWidth;
     }
 
     private static Cfg normalize(Cfg read) {
@@ -91,12 +94,17 @@ public final class Config {
         read.boldDilation = round2(clamp(read.boldDilation, 0.0, 0.5));
         read.boldOffset = round2(clamp(read.boldOffset, 0.0, 1.0));
         read.signGlowDistance = (int) clamp(read.signGlowDistance, 4, 16);
+        read.signGlowWidth = round1(clamp(read.signGlowWidth, 0.5, 1.0));
         return read;
     }
 
     private static double clamp(double v, double lo, double hi) {
         if (Double.isNaN(v)) return hi;
         return Math.max(lo, Math.min(hi, v));
+    }
+
+    private static double round1(double v) {
+        return Math.round(v * 10.0) / 10.0;
     }
 
     private static double round2(double v) {

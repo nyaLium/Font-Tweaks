@@ -15,5 +15,6 @@
   "font_tweaks.config.boldEntry": "粗体渲染…",
   "font_tweaks.config.glowEntry": "荧光文本渲染…",
   "font_tweaks.config.boldTitle": "粗体渲染",
-  "font_tweaks.config.glowTitle": "荧光文本渲染"
+  "font_tweaks.config.glowTitle": "荧光文本渲染",
+  "font_tweaks.config.width": "描边粗细：%s px"
 }

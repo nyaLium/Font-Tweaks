@@ -38,6 +38,7 @@ public final class BoldGlyphPair implements BakedGlyph {
 
     /** 描边变体的缓存（强度固定，只需随图集重载作废）。 */
     private boolean outlineResolved;
+    private float outlineBakedWidth = -1.0F;
     private @Nullable BakedGlyph outline;
 
     private @Nullable Style lastBoldStyle;
@@ -125,8 +126,10 @@ public final class BoldGlyphPair implements BakedGlyph {
             return null;
         }
 
-        if (!this.outlineResolved) {
+        float width = SignGlowOutline.width();
+        if (!this.outlineResolved || this.outlineBakedWidth != width) {
             this.outlineResolved = true;
+            this.outlineBakedWidth = width;
             this.outline = this.bake(this.outlineSupplier, "荧光描边");
             if (this.outline != null) {
                 SignGlowOutline.noteApplied();

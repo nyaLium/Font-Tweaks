@@ -3,6 +3,7 @@ package com.nyalium.fonttweaks.mixin;
 import com.mojang.blaze3d.font.GlyphBitmap;
 import com.mojang.blaze3d.font.GlyphInfo;
 import com.mojang.blaze3d.font.UnbakedGlyph;
+import com.nyalium.fonttweaks.BoldDilatedBitmap;
 import com.nyalium.fonttweaks.BoldGlyphFactory;
 import com.nyalium.fonttweaks.BoldGlyphPair;
 import com.nyalium.fonttweaks.BoldPixelSource;
@@ -52,6 +53,6 @@ public abstract class TrueTypeGlyphProviderGlyphMixin {
         return new BoldGlyphPair(
                 normal,
                 new BoldGlyphFactory(stitcher, info, bitmap, pixels),
-                new BoldGlyphFactory(stitcher, info, bitmap, pixels, SignGlowOutline.OUTLINE_STRENGTH, true));
+                new BoldGlyphFactory(stitcher, info, bitmap, pixels, BoldDilatedBitmap.GLOW, true));
     }
 }

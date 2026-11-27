@@ -15,5 +15,6 @@
   "font_tweaks.config.boldEntry": "Bold rendering…",
   "font_tweaks.config.glowEntry": "Glowing text…",
   "font_tweaks.config.boldTitle": "Bold rendering",
-  "font_tweaks.config.glowTitle": "Glowing text"
+  "font_tweaks.config.glowTitle": "Glowing text",
+  "font_tweaks.config.width": "Outline width: %s px"
 }

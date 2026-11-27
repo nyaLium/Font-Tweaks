@@ -23,6 +23,8 @@ import com.mojang.renderpearl.api.textures.GpuTexture;
 public final class BoldDilatedBitmap implements GlyphBitmap {
     /** 强度跟着配置走（粗体）。 */
     public static final double DYNAMIC = -1.0;
+    /** 强度取「描边粗细」（荧光描边）。 */
+    public static final double GLOW = Double.NaN;
 
     private final GlyphBitmap base;
     private final BoldPixelSource pixels;
@@ -90,6 +92,7 @@ public final class BoldDilatedBitmap implements GlyphBitmap {
 
     /** 当前生效的膨胀强度（GUI 像素）。 */
     private float strength() {
+        if (Double.isNaN(this.strength)) return SignGlowOutline.width();
         return this.strength == DYNAMIC ? BoldDilation.strength() : (float) this.strength;
     }
 
