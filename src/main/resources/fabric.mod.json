@@ -3,7 +3,7 @@
   "id": "font-tweaks",
   "version": "${version}",
   "name": "Font Tweaks",
-  "description": "粗体渲染优化（掩膜膨胀，粗体只画一遍）与告示牌荧光文本描边优化（8 遍合成 1 遍）。纯客户端。",
+  "description": "Optimizes the rendering of bold text and glowing sign text.",
   "authors": ["nyaLium"],
   "license": "MIT",
   "environment": "client",
