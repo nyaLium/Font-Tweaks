@@ -38,7 +38,9 @@ public final class BoldSettingsScreen extends Screen {
                 .create(x, y, width, ROW_HEIGHT, Component.translatable("font_tweaks.config.bold"),
                         (b, v) -> {
                             Config.get().boldOptimize = v;
-                            BoldDilation.reset();   // 切换开关时解除“永久停用”，让功能重试
+                            Config.save();
+                            // 调试开关：强制重载资源包，字形重新烘焙，功能立即按新状态生效
+                            this.minecraft.reloadResourcePacks();
                             this.rebuildWidgets();
                         }));
         y += ROW_GAP;
@@ -51,7 +53,6 @@ public final class BoldSettingsScreen extends Screen {
                 .create(x, y, width, ROW_HEIGHT, Component.translatable("font_tweaks.config.mode"),
                         (b, v) -> {
                             Config.get().boldMode = v;
-                            BoldDilation.reset();
                             this.rebuildWidgets();
                         }));
         y += ROW_GAP;
@@ -85,6 +86,8 @@ public final class BoldSettingsScreen extends Screen {
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
         graphics.centeredText(this.font, this.title, this.width / 2, 24, 0xFFFFFFFF);
+        graphics.centeredText(this.font, Component.translatable("font_tweaks.config.debugHint"),
+                this.width / 2, 38, 0xFFA0A0A0);
     }
 
     @Override

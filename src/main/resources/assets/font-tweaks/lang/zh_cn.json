@@ -16,5 +16,6 @@
   "font_tweaks.config.glowEntry": "荧光文本渲染…",
   "font_tweaks.config.boldTitle": "粗体渲染",
   "font_tweaks.config.glowTitle": "荧光文本渲染",
-  "font_tweaks.config.width": "描边粗细：%s px"
+  "font_tweaks.config.width": "描边粗细：%s px",
+  "font_tweaks.config.debugHint": "调试开关：切换会立即重载资源包"
 }

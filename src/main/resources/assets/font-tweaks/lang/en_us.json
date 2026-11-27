@@ -16,5 +16,6 @@
   "font_tweaks.config.glowEntry": "Glowing text…",
   "font_tweaks.config.boldTitle": "Bold rendering",
   "font_tweaks.config.glowTitle": "Glowing text",
-  "font_tweaks.config.width": "Outline width: %s px"
+  "font_tweaks.config.width": "Outline width: %s px",
+  "font_tweaks.config.debugHint": "Debug switch: toggling reloads resource packs"
 }

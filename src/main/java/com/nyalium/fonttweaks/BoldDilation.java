@@ -139,12 +139,6 @@ public final class BoldDilation {
         return Math.max(1, Math.min(MAX_MARGIN, margin));
     }
 
-    /** 解除「永久停用」状态（用户在设置里切换开关时调用，让功能有机会重试）。 */
-    public static void reset() {
-        failed = false;
-        oobReported = false;
-    }
-
     static void disable(String reason, Throwable cause) {
         if (!failed) {
             failed = true;
@@ -206,7 +200,6 @@ public final class BoldDilation {
         int width = source.getWidth();
         int height = source.getHeight();
         if (width <= 0 || height <= 0 || width > MAX_CELL_PIXELS || height > MAX_CELL_PIXELS) {
-            logOnce("oversize", "膨胀跳过：尺寸 {}x{} 超出上限 {}", width, height, MAX_CELL_PIXELS);
             return null;
         }
 
@@ -215,7 +208,6 @@ public final class BoldDilation {
         boolean rgba = components == 4;
         boolean single = components == 1;
         if (!format.hasLuminanceOrAlpha() || (!rgba && !single)) {
-            logOnce("unsupported-format", "膨胀跳过：format={} {}x{}", format, width, height);
             return null;
         }
 
@@ -236,15 +228,7 @@ public final class BoldDilation {
         try {
             ByteBuffer src = source.getPixelBytes();
             ByteBuffer dst = out.getPixelBytes();
-            if (!diagDone) {
-                diagDone = true;
-                LOGGER.info("[Font Tweaks] dilate diag: format={} {}x{} comps={} coverOff={} srcLimit={} dstLimit={} margin={}",
-                        format, width, height, components, format.luminanceOrAlphaOffset() / 8,
-                        src.limit(), dst.limit(), margin);
-            }
-            // 注意：Format.luminanceOrAlphaOffset() 返回的是**位**偏移（RGBA 的 alpha 在 24 位），
-            // 而 getPixelBytes() 是按字节索引的缓冲区，所以必须 /8 换成字节偏移（RGBA → 3）。
-            int coverageOffset = format.luminanceOrAlphaOffset() / 8;
+            int coverageOffset = format.luminanceOrAlphaOffset();
             int stride = width * components;
             int outStride = outWidth * components;
 
@@ -492,34 +476,8 @@ public final class BoldDilation {
             return 0;
         }
 
-        int index = y * stride + x * components + coverageOffset;
-        if (index < 0 || index >= bytes.limit()) {
-            if (!oobReported) {
-                oobReported = true;
-                LOGGER.warn("[Font Tweaks] 字形缓冲区越界：index={} limit={} ({}x{}, {} comps, stride {})",
-                        index, bytes.limit(), width, height, components, stride);
-            }
-            // 越界说明「图像尺寸」与「缓冲区大小」对不上：记一行诊断后中止，
-            // 由上层 disable() 退回原版（宁可没有优化，也不能让文字变成空白）。
-            return 0;
-        }
-
-        return bytes.get(index) & 0xFF;
+        return bytes.get(y * stride + x * components + coverageOffset) & 0xFF;
     }
-
-    private static boolean oobReported;
-
-    /** 每种「跳过原因」只记一行，避免刷屏。 */
-    static void logOnce(String key, String format, Object... args) {
-        if (!LOGGED.add(key)) {
-            return;
-        }
-
-        LOGGER.warn("[Font Tweaks] " + format, args);
-    }
-
-    private static final java.util.Set<String> LOGGED = java.util.concurrent.ConcurrentHashMap.newKeySet();
-    private static boolean diagDone;
 
     private static double clamp(double value, double lo, double hi) {
         return value < lo ? lo : (value > hi ? hi : value);
