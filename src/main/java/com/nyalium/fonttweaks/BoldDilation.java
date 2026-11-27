@@ -139,6 +139,12 @@ public final class BoldDilation {
         return Math.max(1, Math.min(MAX_MARGIN, margin));
     }
 
+    /** 解除「永久停用」状态（用户在设置里切换开关时调用，让功能有机会重试）。 */
+    public static void reset() {
+        failed = false;
+        oobReported = false;
+    }
+
     static void disable(String reason, Throwable cause) {
         if (!failed) {
             failed = true;
@@ -228,6 +234,12 @@ public final class BoldDilation {
         try {
             ByteBuffer src = source.getPixelBytes();
             ByteBuffer dst = out.getPixelBytes();
+            if (!diagDone) {
+                diagDone = true;
+                LOGGER.info("[Font Tweaks] dilate diag: format={} {}x{} comps={} coverOff={} srcLimit={} dstLimit={} margin={}",
+                        format, width, height, components, format.luminanceOrAlphaOffset(),
+                        src.limit(), dst.limit(), margin);
+            }
             int coverageOffset = format.luminanceOrAlphaOffset();
             int stride = width * components;
             int outStride = outWidth * components;
@@ -476,8 +488,23 @@ public final class BoldDilation {
             return 0;
         }
 
-        return bytes.get(y * stride + x * components + coverageOffset) & 0xFF;
+        int index = y * stride + x * components + coverageOffset;
+        if (index < 0 || index >= bytes.limit()) {
+            if (!oobReported) {
+                oobReported = true;
+                LOGGER.warn("[Font Tweaks] 字形缓冲区越界：index={} limit={} ({}x{}, {} comps, stride {})",
+                        index, bytes.limit(), width, height, components, stride);
+            }
+            // 越界说明「图像尺寸」与「缓冲区大小」对不上：记一行诊断后中止，
+            // 由上层 disable() 退回原版（宁可没有优化，也不能让文字变成空白）。
+            return 0;
+        }
+
+        return bytes.get(index) & 0xFF;
     }
+
+    private static boolean oobReported;
+    private static boolean diagDone;
 
     private static double clamp(double value, double lo, double hi) {
         return value < lo ? lo : (value > hi ? hi : value);

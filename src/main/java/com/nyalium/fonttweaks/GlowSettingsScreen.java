@@ -36,6 +36,7 @@ public final class GlowSettingsScreen extends Screen {
                 .create(x, y, width, ROW_HEIGHT, Component.translatable("font_tweaks.config.signGlow"),
                         (b, v) -> {
                             Config.get().signGlowOutline = v;
+                            SignGlowOutline.reset();
                             this.rebuildWidgets();
                         }));
         y += ROW_GAP;

@@ -38,6 +38,7 @@ public final class BoldSettingsScreen extends Screen {
                 .create(x, y, width, ROW_HEIGHT, Component.translatable("font_tweaks.config.bold"),
                         (b, v) -> {
                             Config.get().boldOptimize = v;
+                            BoldDilation.reset();   // 切换开关时解除“永久停用”，让功能重试
                             this.rebuildWidgets();
                         }));
         y += ROW_GAP;
@@ -50,6 +51,7 @@ public final class BoldSettingsScreen extends Screen {
                 .create(x, y, width, ROW_HEIGHT, Component.translatable("font_tweaks.config.mode"),
                         (b, v) -> {
                             Config.get().boldMode = v;
+                            BoldDilation.reset();
                             this.rebuildWidgets();
                         }));
         y += ROW_GAP;
