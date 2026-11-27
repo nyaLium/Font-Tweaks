@@ -206,6 +206,7 @@ public final class BoldDilation {
         int width = source.getWidth();
         int height = source.getHeight();
         if (width <= 0 || height <= 0 || width > MAX_CELL_PIXELS || height > MAX_CELL_PIXELS) {
+            logOnce("oversize", "膨胀跳过：尺寸 {}x{} 超出上限 {}", width, height, MAX_CELL_PIXELS);
             return null;
         }
 
@@ -214,6 +215,7 @@ public final class BoldDilation {
         boolean rgba = components == 4;
         boolean single = components == 1;
         if (!format.hasLuminanceOrAlpha() || (!rgba && !single)) {
+            logOnce("unsupported-format", "膨胀跳过：format={} {}x{}", format, width, height);
             return null;
         }
 
@@ -506,6 +508,17 @@ public final class BoldDilation {
     }
 
     private static boolean oobReported;
+
+    /** 每种「跳过原因」只记一行，避免刷屏。 */
+    static void logOnce(String key, String format, Object... args) {
+        if (!LOGGED.add(key)) {
+            return;
+        }
+
+        LOGGER.warn("[Font Tweaks] " + format, args);
+    }
+
+    private static final java.util.Set<String> LOGGED = java.util.concurrent.ConcurrentHashMap.newKeySet();
     private static boolean diagDone;
 
     private static double clamp(double value, double lo, double hi) {

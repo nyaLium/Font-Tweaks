@@ -106,6 +106,8 @@ public final class BoldDilatedBitmap implements GlyphBitmap {
         NativeImage source = this.pixels.render();
         if (source == null) {
             // 让上层走降级（FontSet 会给回 missing 字形，BoldGlyphPair 会识破并退回双画）
+            BoldDilation.logOnce("no-pixels", "膨胀跳过：取不到字形像素（粘性={} 超采样={}）",
+                    this.base.isColored(), this.getOversample());
             throw new IllegalStateException("bold dilation pixel source unavailable");
         }
 

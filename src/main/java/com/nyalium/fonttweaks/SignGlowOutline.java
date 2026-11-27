@@ -61,6 +61,13 @@ public final class SignGlowOutline {
     private static boolean missed;
     /** 这一轮是否遇到过本 mod 的字形对（没有 → 字形来源被别的 mod 接管了）。 */
     private static boolean sawPair;
+    private static final java.util.Set<String> LOGGED = java.util.concurrent.ConcurrentHashMap.newKeySet();
+
+    private static void logOnce(String key, String msg) {
+        if (LOGGED.add(key)) {
+            LOGGER.warn("[Font Tweaks] " + msg);
+        }
+    }
     private static int missCount;
     private static boolean announced;
     private static boolean failed;
@@ -142,12 +149,14 @@ public final class SignGlowOutline {
 
             Font.PreparedText prepared = font.prepareText(recolored, x, y, outlineColor, false, false, 0);
             if (missed) {
+                logOnce("missed", "描边退回原版：本行有字形没有描边变体");
                 return null;
             }
 
             // 一个本 mod 的字形都没遇到（Caxton 之类接管了字体渲染）→
             // 不要取消原版 8 遍描边，否则描边会直接消失。
             if (!sawPair) {
+                logOnce("no-pair", "描边退回原版：本行没有任何本 mod 的字形（字体被其它 mod 接管？）");
                 return null;
             }
 
