@@ -45,4 +45,4 @@ gradle build --offline
 ## 许可
 
 MIT（见 `LICENSE`）。
-灵感来自 BoldTextFix（粗体多模式）与 FeyTweaks（荧光描边优化）的**思路**，未使用它们的任何代码。
+灵感来自 BoldTextFix（粗体多模式）与 FeyTweaks（荧光描边优化）的**思路**。
