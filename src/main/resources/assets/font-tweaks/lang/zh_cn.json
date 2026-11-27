@@ -1,0 +1,14 @@
+{
+  "font_tweaks.config.title": "Font Tweaks 设置",
+  "font_tweaks.config.bold": "粗体渲染优化",
+  "font_tweaks.config.mode": "粗体模式",
+  "font_tweaks.config.mode.dilation": "膨胀",
+  "font_tweaks.config.mode.offset": "偏移",
+  "font_tweaks.config.dilation": "膨胀强度：%s",
+  "font_tweaks.config.offset": "偏移距离：%s",
+  "font_tweaks.config.signGlow": "告示牌荧光描边优化",
+  "font_tweaks.config.distance": "描边距离上限：%s 格",
+  "font_tweaks.config.hint": "粗体只画一遍 · 荧光描边 8 遍合成 1 遍",
+  "font_tweaks.config.reset": "恢复默认",
+  "font_tweaks.config.done": "完成"
+}

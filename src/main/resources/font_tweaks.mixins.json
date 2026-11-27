@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.nyalium.fonttweaks.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "BitmapProviderGlyphMixin",
+    "FontOutlineMixin",
+    "GlyphStitcherMixin",
+    "SignOutlineDistanceMixin",
+    "TrueTypeGlyphProviderGlyphMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

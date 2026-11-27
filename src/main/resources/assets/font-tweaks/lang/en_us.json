@@ -1,0 +1,14 @@
+{
+  "font_tweaks.config.title": "Font Tweaks",
+  "font_tweaks.config.bold": "Bold rendering optimization",
+  "font_tweaks.config.mode": "Bold mode",
+  "font_tweaks.config.mode.dilation": "Dilation",
+  "font_tweaks.config.mode.offset": "Offset",
+  "font_tweaks.config.dilation": "Dilation strength: %s",
+  "font_tweaks.config.offset": "Offset distance: %s",
+  "font_tweaks.config.signGlow": "Glowing sign outline optimization",
+  "font_tweaks.config.distance": "Outline distance: %s blocks",
+  "font_tweaks.config.hint": "Bold drawn once · sign outline merged 8 passes into 1",
+  "font_tweaks.config.reset": "Reset",
+  "font_tweaks.config.done": "Done"
+}
