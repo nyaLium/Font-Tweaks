@@ -1,13 +1,10 @@
 package com.nyalium.fonttweaks;
 
-import net.minecraft.client.InputType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
@@ -86,8 +83,6 @@ public final class GlowSettingsScreen extends Screen {
 
     private static final class ValueSlider extends AbstractSliderButton {
         private final double min, max, step;
-        /** 是否处于「可调值」状态（左右键调值而不是移动焦点）。 */
-        private boolean editing;
         private final DoubleFunction<Component> label;
         private final DoubleConsumer onChange;
 
@@ -106,41 +101,5 @@ public final class GlowSettingsScreen extends Screen {
 
         @Override protected void updateMessage() { setMessage(this.label.apply(currentValue())); }
         @Override protected void applyValue() { this.onChange.accept(currentValue()); }
-
-        @Override
-        public boolean keyPressed(KeyEvent event) {
-            // 26.3 的滑块是「先选中再用左右键调值」：Enter / 空格进入调值态，
-            // 未进入时左右键要留给界面做焦点导航（否则同一行里换不了控件）。
-            if (event.isSelection()) {
-                this.editing = !this.editing;
-                return true;
-            }
-
-            if (event.isLeft() || event.isRight()) {
-                if (!this.editing) {
-                    return false;
-                }
-
-                double f = this.step / (this.max - this.min);
-                setValue(Math.max(0.0, Math.min(1.0, this.value + (event.isLeft() ? -f : f))));
-                return true;
-            }
-
-            return super.keyPressed(event);
-        }
-
-        /** 与 26.3 一致：鼠标 / Tab 聚焦后可直接调值，方向键导航过来则要先 Enter / 空格。 */
-        @Override
-        public void setFocused(boolean focused) {
-            super.setFocused(focused);
-
-            if (!focused) {
-                this.editing = false;
-                return;
-            }
-
-            InputType type = Minecraft.getInstance().getLastInputType();
-            this.editing = type == InputType.MOUSE || type == InputType.KEYBOARD_TAB;
-        }
     }
 }
